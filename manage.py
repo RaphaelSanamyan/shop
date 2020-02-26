@@ -1,0 +1,26 @@
+from flask import Flask
+from flask_jwt_extended import JWTManager
+from flask_migrate import Migrate, MigrateCommand
+from flask_script import Manager
+from flask_sqlalchemy import SQLAlchemy
+
+from app.app import create_app
+from app.db import create_db
+from app.jwt import create_jwt
+from app.models import Good, User
+
+app: Flask = create_app()
+db: SQLAlchemy = create_db(app)
+jwt: JWTManager = create_jwt(app)
+manager: Manager = Manager(app)
+migrate: Migrate = Migrate(app, db)
+manager.add_command('db', MigrateCommand)
+
+
+@manager.command
+def run():
+    app.run(debug=True, host="localhost", port=5000)
+
+
+if __name__ == '__main__':
+    manager.run()
