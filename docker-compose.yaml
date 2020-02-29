@@ -23,9 +23,9 @@ services:
         container_name: postgresql
         restart: always
         environment:
-            - DBUSER=postgre
-            - DBPASS=postgre
-            - DBNAME=honeybunny
+            - POSTGRES_USER=postgre
+            - POSTGRES_PASSWORD=postgre
+            - POSTGRES_DB=honeybunny
         ports:
             - "5432:5432"
         networks:
