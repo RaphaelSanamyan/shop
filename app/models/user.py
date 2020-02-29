@@ -21,16 +21,16 @@ class User(db.Model):
     @staticmethod
     def is_exists_username(username: str) -> bool:
         return db.session\
-                   .query(User.id).\
-                   filter_by(username=username)\
-                   .scalar() is not None
+            .query(User.id).\
+            filter_by(username=username)\
+            .scalar() is not None
 
     @staticmethod
     def is_exists_email(email: str) -> bool:
         return db.session\
-                   .query(User.id)\
-                   .filter_by(email=email)\
-                   .scalar() is not None
+            .query(User.id)\
+            .filter_by(email=email)\
+            .scalar() is not None
 
     def commit(self) -> None:
         db.session.add(self)
@@ -39,6 +39,6 @@ class User(db.Model):
     @staticmethod
     def login(email: str, password: str) -> bool:
         return db.session\
-                   .query(User.id)\
-                   .filter_by(email=email, password=password)\
-                   .scalar() is not None
+            .query(User.id)\
+            .filter_by(email=email, password=password)\
+            .scalar() is not None

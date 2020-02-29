@@ -46,5 +46,5 @@ class Good(db.Model):
             db.session.delete(Good.query.filter_by(**kwargs).first())
             db.session.commit()
             return True
-        except UnmappedInstanceError as err:
+        except UnmappedInstanceError:
             return False

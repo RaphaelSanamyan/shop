@@ -12,5 +12,5 @@ def get_codes(*codes) -> Dict[int, str]:
     return {
         code: RESPONSE.get(code)
         for code in codes
-        if (msg := RESPONSE.get(code))
+        if RESPONSE.get(code)
     }
