@@ -1,3 +1,5 @@
+from os import system
+
 from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate, MigrateCommand
@@ -19,6 +21,7 @@ manager.add_command('db', MigrateCommand)
 
 @manager.command
 def run():
+    system('python manage.py db upgrade')
     app.run(debug=True, host="0.0.0.0", port=5000)
 
 
