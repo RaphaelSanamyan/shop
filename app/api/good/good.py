@@ -1,3 +1,5 @@
+from typing import List, Optional
+
 from flask_restplus import Resource
 
 from app.api.good.models import good_with_id, good_model
@@ -18,8 +20,8 @@ class Goods(Resource):
     @api.expect(good_model, validate=True)
     @api.doc(responses=get_codes(200, 409))
     def post(self):
-        categories = api.payload.pop("categories")
-        good = mark_categories(Good(**api.payload), categories)
+        categories: List[str] = api.payload.pop("categories")
+        good: Good = mark_categories(Good(**api.payload), categories)
         return "success" if good.commit() else api.abort(409)
 
 
@@ -33,12 +35,12 @@ class GoodsById(Resource):
     @api.expect(good_model)
     @api.doc(params={"id": "id"}, responses=get_codes(200, 404))
     def put(self, id: int):
-        good = Good.first(id=id)
-        good.update(**api.payload) if good else api.doc(404)
+        good: Optional[Good] = Good.first(id=id)
+        good.update(**api.payload) if good else api.abort(404)
         return "success"
 
     @api.marshal_with(good_with_id, mask=None)
     @api.doc(responses=get_codes(200, 404))
     def get(self, id: int):
-        good: Good = Good.first(id=id)
+        good: Optional[Good] = Good.first(id=id)
         return good if good else api.abort(404)
