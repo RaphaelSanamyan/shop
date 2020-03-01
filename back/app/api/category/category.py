@@ -11,7 +11,9 @@ class Categories(Resource):
     @api.expect(category_model, validate=True)
     @api.doc(responses=get_codes(200, 409))
     def post(self):
-        return "success" if Category(**api.payload).commit() else api.abort(409)
+        if Category(**api.payload).commit():
+            return "success"
+        api.abort(409)
 
     @api.marshal_list_with(category_with_id, mask=None)
     @api.doc(responses=get_codes(200))
