@@ -1,5 +1,3 @@
-from typing import Dict
-
 from flask_jwt_extended import create_access_token
 from flask_restplus import Resource
 
@@ -14,8 +12,8 @@ class Auth(Resource):
     @api.expect(registration_model, validate=True)
     @api.doc(responses=get_codes(200, 409))
     def post(self):
-        if User.is_exists_username(api.payload.get("username")):
-            return api.abort(409, "That username is taken. Try another.")
+        if User.is_exists_login(api.payload["login"]):
+            return api.abort(409, "That login is taken. Try another.")
 
         if User.is_exists_email(api.payload.get("email")):
             return api.abort(409, "That email is taken. Try another.")
@@ -29,6 +27,6 @@ class Login(Resource):
     @api.expect(login_model, validate=True)
     @api.doc(responses=get_codes(200, 401))
     def post(self):
-        if User.login(**api.payload):
+        if User.log_in(**api.payload):
             return create_access_token(identity=api.payload.get("username"))
         api.abort(401, "Wrong email or password.")

@@ -5,10 +5,13 @@ from .namespace import GOOD_NAMESPACE as api
 
 good_model: Model = api.model("good", {
     "name": fields.String(),
+    "weight": fields.String(),
     "description": fields.String(),
-    "price": fields.Integer()
+    "measure": fields.String(),
+    "price": fields.Integer(),
+    "categories": fields.List(fields.String)
 })
 
-good_by_id: Model = api.inherit("good with id", good_model, {
+good_with_id: Model = api.inherit("good with id", good_model, {
     "id": fields.Integer()
 })
