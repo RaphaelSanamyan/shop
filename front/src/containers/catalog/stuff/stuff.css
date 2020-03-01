@@ -1,0 +1,14 @@
+.actions-align {
+    justify-content: space-between;
+}
+
+.content-scroll {
+    height: 70px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.width-stuff {
+    max-width: 20vw;
+    min-width: 200px;
+}
