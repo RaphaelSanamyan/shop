@@ -14,6 +14,9 @@ class Busket(db.Model):
     good_id = db.Column(db.Integer, db.ForeignKey("Good.id"))
     amount = db.Column(db.Integer)
 
+    def __repr__(self):
+        return "user - {}\ngood - {}\namount - {}"
+
     def commit(self) -> bool:
         db.session.add(self)
         try:

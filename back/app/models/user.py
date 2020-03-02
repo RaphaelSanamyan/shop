@@ -19,7 +19,7 @@ class User(db.Model):
     )
 
     def __repr__(self) -> str:
-        return self.username
+        return "{} {}".format(self.firstName, self.lastName)
 
     @staticmethod
     def is_exists_login(login: str) -> bool:

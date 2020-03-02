@@ -6,7 +6,7 @@ from app.api.responses import get_codes
 from app.models.category import Category
 
 
-@api.route('/')
+@api.route("/")
 class Categories(Resource):
     @api.expect(category_model, validate=True)
     @api.doc(responses=get_codes(200, 409))
@@ -21,7 +21,7 @@ class Categories(Resource):
         return Category.all()
 
 
-@api.route('/<id>')
+@api.route("/<id>")
 @api.doc(params={"id": "id"})
 class CategoriesById(Resource):
     @api.doc(responses=get_codes(200, 404))
