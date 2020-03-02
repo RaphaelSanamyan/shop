@@ -6,8 +6,7 @@ from app.api.good.models import good_with_id, good_model
 from app.api.good.namespace import GOOD_NAMESPACE as api
 from app.api.responses import get_codes
 from app.models.good import Good
-
-from app.query.controller import mark_categories
+from app.models.category import Category
 
 
 @api.route('/')
@@ -18,11 +17,23 @@ class Goods(Resource):
         return Good.all()
 
     @api.expect(good_model, validate=True)
-    @api.doc(responses=get_codes(200, 409))
+    @api.doc(responses=get_codes(200, 404, 409))
     def post(self):
-        categories: List[str] = api.payload.pop("categories")
-        good: Good = mark_categories(Good(**api.payload), categories)
+        category_name = api.payload.pop("category")
+        category = Category.first(name=category_name)
+        if not category:
+            api.abort(404, "Category doesn't exist")
+
+        good: Good = Good(category=category, **api.payload)
         return "success" if good.commit() else api.abort(409)
+
+
+@api.route('/<category>')
+class GoodsByCategory(Resource):
+    @api.marshal_list_with(good_with_id, mask=None)
+    @api.doc(responses=get_codes(200))
+    def get(self, category: str):
+        return Category.get_all_goods(category)
 
 
 @api.route('/<id>')

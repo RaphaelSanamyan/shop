@@ -6,19 +6,13 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import UnmappedInstanceError
 
 from app.db import DB as db
-from app.models.good_category import good_category
 
 
 class Category(db.Model):
     __tablename__ = "Category"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
-    good = db.relationship(
-        "Good",
-        backref="categories",
-        secondary=good_category,
-        lazy="dynamic"
-    )
+    goods = db.relationship("Good", backref="category", lazy="dynamic")
 
     def __repr__(self):
         return self.name
@@ -30,6 +24,10 @@ class Category(db.Model):
             return True
         except IntegrityError:
             return False
+
+    @staticmethod
+    def get_all_goods(category_name: str):
+        return Category.query.filter_by(name=category_name).first().goods.all()
 
     @staticmethod
     def all() -> List[Category]:

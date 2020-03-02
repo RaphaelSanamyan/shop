@@ -9,7 +9,7 @@ good_model: Model = api.model("good", {
     "description": fields.String(required=True),
     "measure": fields.String(required=True),
     "price": fields.Integer(required=True),
-    "categories": fields.List(fields.String, required=True)
+    "category": fields.String(required=True)
 })
 
 good_with_id: Model = api.inherit("good with id", good_model, {

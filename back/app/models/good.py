@@ -6,7 +6,6 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import UnmappedInstanceError
 
 from app.db import DB as db
-from app.models.good_category import good_category
 
 
 class Good(db.Model):
@@ -17,12 +16,7 @@ class Good(db.Model):
     description = db.Column(db.Text)
     measure = db.Column(db.String(64))
     price = db.Column(db.Float)
-    category = db.relationship(
-        "Category",
-        backref="goods",
-        secondary=good_category,
-        lazy="dynamic"
-    )
+    category_id = db.Column(db.Integer, db.ForeignKey("Category.id"))
 
     def __repr__(self) -> str:
         return self.name
