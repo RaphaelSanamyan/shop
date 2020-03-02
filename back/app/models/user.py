@@ -11,6 +11,12 @@ class User(db.Model):
     login = db.Column(db.String(64), unique=True)
     email = db.Column(db.String(128), unique=True)
     password = db.Column(db.String(32))
+    goods = db.relationship(
+        "Busket",
+        backref="user",
+        lazy="dynamic",
+        foreign_keys="Busket.user_id"
+    )
 
     def __repr__(self) -> str:
         return self.username

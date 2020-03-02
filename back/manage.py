@@ -10,7 +10,7 @@ from flask_cors import CORS
 from app.app import create_app
 from app.db import create_db
 from app.jwt import create_jwt
-from app.models import Good, User
+from app.models import Good, User, Category, Busket
 
 
 app: Flask = create_app()
