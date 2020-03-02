@@ -1,6 +1,7 @@
-from app.db import DB as db
 from sqlalchemy import UniqueConstraint
 from sqlalchemy.exc import IntegrityError
+
+from app.db import DB as db
 
 
 class Busket(db.Model):
@@ -17,10 +18,24 @@ class Busket(db.Model):
     def __repr__(self):
         return "user - {}\ngood - {}\namount - {}"
 
+    @property
     def commit(self) -> bool:
         db.session.add(self)
         try:
             db.session.commit()
             return True
         except IntegrityError:
+            return False
+
+    def update(self, amount: int):
+        self.amount = amount
+        db.session.commit()
+
+    @staticmethod
+    def delete(id):
+        try:
+            db.session.delete(Busket.query.filter_by(id=id).first())
+            db.session.commit()
+            return True
+        except UnmappedInstanceError:
             return False

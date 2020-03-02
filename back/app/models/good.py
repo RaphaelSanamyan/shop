@@ -38,7 +38,7 @@ class Good(db.Model):
 
     def update(self, **kwargs):
         for key, value in kwargs.items():
-            if key != "categories":
+            if key != "category":
                 self.__setattr__(key, value)
 
         db.session.commit()

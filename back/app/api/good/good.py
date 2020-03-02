@@ -9,7 +9,7 @@ from app.models.good import Good
 from app.models.category import Category
 
 
-@api.route('/')
+@api.route("/")
 class Goods(Resource):
     @api.marshal_list_with(good_with_id, mask=None)
     @api.doc(responses=get_codes(200))
@@ -28,7 +28,7 @@ class Goods(Resource):
         return "success" if good.commit() else api.abort(409)
 
 
-@api.route('/<category>')
+@api.route("/<category>")
 class GoodsByCategory(Resource):
     @api.marshal_list_with(good_with_id, mask=None)
     @api.doc(responses=get_codes(200))
@@ -36,7 +36,7 @@ class GoodsByCategory(Resource):
         return Category.get_all_goods(category)
 
 
-@api.route('/<id>')
+@api.route("/<id>")
 @api.doc(params={"id": "id"})
 class GoodsById(Resource):
     @api.doc(responses=get_codes(200, 404))
