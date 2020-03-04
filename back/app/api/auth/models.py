@@ -15,3 +15,10 @@ login_model: Model = api.model("login", {
     "login": fields.String(required=True),
     "password": fields.String(required=True)
 })
+
+auth_response_model: Model = api.model("auth response", {
+    "accessToken": fields.String(),
+    "userId": fields.Integer(),
+    "firstName": fields.String(),
+    "lastName": fields.String()
+})

@@ -35,9 +35,11 @@ class User(db.Model):
             .filter_by(email=email)\
             .scalar() is not None
 
-    def commit(self) -> None:
+    @property
+    def commit(self) -> User:
         db.session.add(self)
         db.session.commit()
+        return self
 
     @staticmethod
     def log_in(login: str, password: str) -> bool:
