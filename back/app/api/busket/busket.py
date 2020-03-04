@@ -19,7 +19,7 @@ class BusketsByItemId(Resource):
     @api.expect(item_amount, validate=True)
     @api.doc(responses=get_codes(200))
     def put(self, item_id):
-        Busket.query.filter(id=item_id).first().update(api.payload["amount"])
+        Busket.query.filter_by(id=item_id).first().update(api.payload["amount"])
         return "success"
 
     @api.doc(responses=get_codes(200, 404))
